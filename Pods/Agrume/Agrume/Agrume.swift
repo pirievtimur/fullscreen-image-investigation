@@ -18,19 +18,34 @@ public protocol AgrumeDataSource {
 
 }
 
+public protocol ProfilePhotosActions {
+    func likesCount() -> Int
+    func isLiked() -> Bool
+    func isFavorite() -> Bool
+    func favorite(favorite: Bool)
+    func isBlocked() -> Bool
+    func block(block: Bool) -> Void
+    func reportSpam() -> Void
+    func reportAbuse() -> Void
+}
+
 public final class Agrume: UIViewController {
 
-  fileprivate static let transitionAnimationDuration: TimeInterval = 0.3
+  fileprivate static let transitionAnimationDuration: TimeInterval = 0.2
   fileprivate static let initialScalingToExpandFrom: CGFloat = 0.6
   fileprivate static let maxScalingForExpandingOffscreen: CGFloat = 1.25
   fileprivate static let reuseIdentifier = "reuseIdentifier"
-
+    
   fileprivate var images: [UIImage]!
   fileprivate var imageUrls: [URL]!
   private var startIndex: Int?
   private let backgroundBlurStyle: UIBlurEffectStyle
   fileprivate let dataSource: AgrumeDataSource?
+    
+   public let delegate: ProfilePhotosActions?
 
+    
+    
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
     
   public var didDismiss: (() -> Void)?
@@ -83,13 +98,13 @@ public final class Agrume: UIViewController {
   /// - Parameter imageUrls: The image urls to present
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  public convenience init(imageUrls: [URL], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-      self.init(image: nil, imageUrls: imageUrls, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
+    public convenience init(imageUrls: [URL], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .dark, delegate: ProfilePhotosActions?) {
+        self.init(image: nil, imageUrls: imageUrls, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle, delegate: delegate)
   }
 
 	private init(image: UIImage? = nil, imageUrl: URL? = nil, images: [UIImage]? = nil,
 	             dataSource: AgrumeDataSource? = nil, imageUrls: [URL]? = nil, startIndex: Int? = nil,
-	             backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
+	             backgroundBlurStyle: UIBlurEffectStyle? = .dark, delegate: ProfilePhotosActions? = nil) {
     assert(backgroundBlurStyle != nil)
     self.images = images
     if let image = image {
@@ -99,7 +114,7 @@ public final class Agrume: UIViewController {
     if let imageURL = imageUrl {
       self.imageUrls = [imageURL]
     }
-
+        self.delegate = delegate
 		self.dataSource = dataSource
     self.startIndex = startIndex
     self.backgroundBlurStyle = backgroundBlurStyle!
@@ -138,15 +153,6 @@ public final class Agrume: UIViewController {
 
   private var backgroundSnapshot: UIImage!
   private var backgroundImageView: UIImageView!
-  fileprivate var _blurContainerView: UIView?
-  fileprivate var blurContainerView: UIView {
-    if _blurContainerView == nil {
-      let view = UIView(frame: self.view.frame)
-      view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-      _blurContainerView = view
-    }
-    return _blurContainerView!
-  }
   fileprivate var _blurView: UIVisualEffectView?
   private var blurView: UIVisualEffectView {
     if _blurView == nil {
@@ -157,19 +163,21 @@ public final class Agrume: UIViewController {
     }
     return _blurView!
   }
+    
+  //MARK: - Collection view
   fileprivate var _collectionView: UICollectionView?
   fileprivate var collectionView: UICollectionView {
     if _collectionView == nil {
         
-        let point = CGPoint.init(x: self.view.frame.origin.x, y: self.view.frame.origin.y + 75)
-        let size = CGSize.init(width: self.view.frame.size.width, height: self.view.frame.size.height - 150)
+      let point = CGPoint.init(x: self.view.frame.origin.x, y: self.view.frame.origin.y + 75)
+      let size = CGSize.init(width: self.view.frame.size.width, height: self.view.frame.size.height - 150)
         
       let layout = UICollectionViewFlowLayout()
       layout.minimumInteritemSpacing = 0
       layout.minimumLineSpacing = 0
       layout.scrollDirection = .horizontal
-      layout.itemSize = size//self.view.frame.size
-      
+      layout.itemSize = size
+        
       let collectionView = UICollectionView(frame: CGRect.init(origin: point, size: size), collectionViewLayout: layout)
       collectionView.register(AgrumeCell.self, forCellWithReuseIdentifier: Agrume.reuseIdentifier)
       collectionView.dataSource = self
@@ -194,16 +202,96 @@ public final class Agrume: UIViewController {
     }
     return _spinner!
   }
-  fileprivate var downloadTask: URLSessionDataTask?
+    //MARK: - Close button
+    fileprivate var _closeButton: UIButton?
+    fileprivate var closeButton: UIButton {
+        if _closeButton == nil {
+            let button = UIButton.init()
+            button.addTarget(self, action: "dismiss", for: .touchUpInside)
+            let frame = CGRect.init(x: 12, y: 12+20, width: 40, height: 40) //20 points for status bar
+            button.frame = frame
+            button.backgroundColor = UIColor.white
+            _closeButton = button
+        }
+        return _closeButton!
+    }
+    
+    //MARK: - Submenu button
+    fileprivate var _menuButton: UIButton?
+    fileprivate var menuButton: UIButton {
+        if _menuButton == nil {
+            let button = UIButton.init()
+            button.addTarget(self, action: "showMenu", for: .touchUpInside)
+            let frame = CGRect.init(x: self.view.frame.size.width - 12 - 40, y: 12+20, width: 40, height: 40) //20 points for status bar
+            button.frame = frame
+            button.backgroundColor = UIColor.white
+            _menuButton = button
+        }
+        return _menuButton!
+    }
+    
+    //MARK: - Like button
+    fileprivate var _likeButton: UIButton?
+    fileprivate var likeButton: UIButton {
+        if _likeButton == nil {
+            let button = UIButton.init()
+            button.addTarget(self, action: "dismiss", for: .touchUpInside)
+            let frame = CGRect.init(x: 0, y: 0, width: 40, height: 40) //20 points for status bar
+            button.frame = frame
+            button.backgroundColor = UIColor.red
+            _likeButton = button
+        }
+        return _likeButton!
+    }
+    
+    //MARK: - Likes label
+    fileprivate var _countLikesLabel: UILabel?
+    fileprivate var countLikesLabel: UILabel {
+        if _countLikesLabel == nil {
+            let frame = CGRect.init(x: 45, y: 0, width: 60, height: 40)
+            let label = UILabel(frame: frame)
+            label.font = UIFont.boldSystemFont(ofSize: 13)
+            label.textColor = UIColor.white
+            label.text = "Int likes"
+            _countLikesLabel = label
+        }
+        return _countLikesLabel!
+    }
+    
+    //MARK: - Like button and label container
+    fileprivate var _likesContainer: UIView?
+    fileprivate var likesContainer: UIView {
+        if _likesContainer == nil {
+            let frame = CGRect(x: self.view.frame.width/2 - 52, y: self.view.frame.height - 75, width: 105, height: 40)
+            let view = UIView.init(frame: frame)
+            _likesContainer = view
+        }
+        return _likesContainer!
+    }
 
+  //MARK: - Submenu methods
+    func showMenu() -> Void {
+        let alertView = UIAlertController.init(title: "USERNAME", message: "DO SOME ACTIONS", preferredStyle: .actionSheet)
+        let favoriteAction = UIAlertAction.init(title: "Favorite", style: .default, handler: nil)
+        let blockAction = UIAlertAction.init(title: "Block", style: .default, handler: nil)
+        let reportAction = UIAlertAction.init(title: "Report", style: .default, handler: nil)
+        let cancel = UIAlertAction.init(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
+        
+        alertView.addAction(favoriteAction)
+        alertView.addAction(blockAction)
+        alertView.addAction(reportAction)
+        alertView.addAction(cancel)
+        
+        present(alertView, animated: true, completion: nil)
+    }
+    
+  fileprivate var downloadTask: URLSessionDataTask?
+    
   override public func viewDidLoad() {
     super.viewDidLoad()
     view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-    //backgroundImageView = UIImageView(frame: view.frame)
-    //backgroundImageView.image = backgroundSnapshot
-    //view.addSubview(backgroundImageView)
   }
-
+    
   private var lastUsedOrientation: UIDeviceOrientation?
 
   public override func viewWillAppear(_ animated: Bool) {
@@ -227,8 +315,11 @@ public final class Agrume: UIViewController {
   }
   
   private func addSubviews() {
-    //blurContainerView.addSubview(blurView)
-    //view.addSubview(blurContainerView)
+    view.addSubview(closeButton)
+    view.addSubview(menuButton)
+    likesContainer.addSubview(likeButton)
+    likesContainer.addSubview(countLikesLabel)
+    view.addSubview(likesContainer)
     view.addSubview(collectionView)
     if let index = startIndex {
       collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: [], animated: false)
@@ -238,7 +329,6 @@ public final class Agrume: UIViewController {
   
   private func showFrom(_ viewController: UIViewController) {
     DispatchQueue.main.async {
-      self.blurContainerView.alpha = 1
       self.collectionView.alpha = 0
         let point = CGPoint.init(x: self.view.frame.origin.x, y: self.view.frame.origin.y + 75)
         let size = CGSize.init(width: self.view.frame.size.width, height: self.view.frame.size.height - 150)
@@ -269,7 +359,7 @@ public final class Agrume: UIViewController {
   }
 
   public func dismiss() {
-    //self.dismissAfterFlick()
+    self.dismissAfterFlick()
   }
 
   public func showImage(atIndex index : Int) {
@@ -488,13 +578,21 @@ extension Agrume: AgrumeCellDelegate {
   }
   
   private func cleanup() {
-    _blurContainerView?.removeFromSuperview()
-    _blurContainerView = nil
     _blurView = nil
     _collectionView?.removeFromSuperview()
     _collectionView = nil
     _spinner?.removeFromSuperview()
     _spinner = nil
+    _closeButton?.removeFromSuperview()
+    _closeButton = nil
+    _menuButton?.removeFromSuperview()
+    _menuButton = nil
+    _likeButton?.removeFromSuperview()
+    _likeButton = nil
+    _countLikesLabel?.removeFromSuperview()
+    _countLikesLabel = nil
+    _likesContainer?.removeFromSuperview()
+    _likesContainer = nil
   }
 
   func dismissAfterFlick() {
@@ -503,22 +601,20 @@ extension Agrume: AgrumeCellDelegate {
                    options: .beginFromCurrentState,
                    animations: { [unowned self] in
                     self.collectionView.alpha = 0
-                    self.blurContainerView.alpha = 0
       }, completion: dismissCompletion)
   }
   
   func dismissAfterTap() {
-//    view.isUserInteractionEnabled = false
-//    
-//    UIView.animate(withDuration: Agrume.transitionAnimationDuration,
-//                   delay: 0,
-//                   options: .beginFromCurrentState,
-//                   animations: { [unowned self] in
-//                    self.collectionView.alpha = 0
-//                    self.blurContainerView.alpha = 0
-//                    let scaling = Agrume.maxScalingForExpandingOffscreen
-//                    self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
-//      }, completion: dismissCompletion)
+    view.isUserInteractionEnabled = false
+    
+    UIView.animate(withDuration: Agrume.transitionAnimationDuration,
+                   delay: 0,
+                   options: .beginFromCurrentState,
+                   animations: { [unowned self] in
+                    self.collectionView.alpha = 0
+                    let scaling = Agrume.maxScalingForExpandingOffscreen
+                    self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
+      }, completion: dismissCompletion)
   }
 }
 

@@ -66,12 +66,12 @@ final class AgrumeCell: UICollectionViewCell {
     updateScrollViewAndImageViewForCurrentMetrics()
   }
 
-  fileprivate lazy var singleTapGesture: UITapGestureRecognizer = {
-    let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTap))
-    singleTapGesture.require(toFail: self.doubleTapGesture)
-    singleTapGesture.delegate = self
-    return singleTapGesture
-  }()
+//  fileprivate lazy var singleTapGesture: UITapGestureRecognizer = {
+//    let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTap))
+//    singleTapGesture.require(toFail: self.doubleTapGesture)
+//    singleTapGesture.delegate = self
+//    return singleTapGesture
+//  }()
   fileprivate lazy var doubleTapGesture: UITapGestureRecognizer = {
     let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
     doubleTapGesture.numberOfTapsRequired = 2
@@ -98,7 +98,7 @@ final class AgrumeCell: UICollectionViewCell {
   fileprivate var attachmentBehavior: UIAttachmentBehavior?
 
   fileprivate func setupGestureRecognizers() {
-    contentView.addGestureRecognizer(singleTapGesture)
+    //contentView.addGestureRecognizer(singleTapGesture)
     contentView.addGestureRecognizer(doubleTapGesture)
     scrollView.addGestureRecognizer(panGesture)
     contentView.addGestureRecognizer(swipeGesture)
@@ -117,8 +117,6 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
       let velocity = pan.velocity(in: scrollView)
       return abs(velocity.y) > abs(velocity.x)
     } else if let _ = gestureRecognizer as? UISwipeGestureRecognizer, notZoomed() {
-      return false
-    } else if let tap = gestureRecognizer as? UITapGestureRecognizer, tap == singleTapGesture && !notZoomed() {
       return false
     }
     return true
