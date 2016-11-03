@@ -1,0 +1,45 @@
+PODS:
+  - Agrume (3.0.3)
+  - FLAnimatedImage (1.0.12)
+  - Kingfisher (3.1.3)
+  - NYTPhotoViewer (1.2.0):
+    - NYTPhotoViewer/AnimatedGifSupport (= 1.2.0)
+    - NYTPhotoViewer/Core (= 1.2.0)
+  - NYTPhotoViewer/AnimatedGifSupport (1.2.0):
+    - FLAnimatedImage (~> 1.0.12)
+    - NYTPhotoViewer/Core
+  - NYTPhotoViewer/Core (1.2.0)
+  - SDWebImage (4.0.0-beta2):
+    - SDWebImage/Core (= 4.0.0-beta2)
+  - SDWebImage/Core (4.0.0-beta2)
+
+DEPENDENCIES:
+  - Agrume (from `https://github.com/JanGorman/Agrume.git`)
+  - Kingfisher
+  - NYTPhotoViewer (~> 1.2.0)
+  - SDWebImage (from `https://github.com/rs/SDWebImage.git`)
+
+EXTERNAL SOURCES:
+  Agrume:
+    :git: https://github.com/JanGorman/Agrume.git
+  SDWebImage:
+    :git: https://github.com/rs/SDWebImage.git
+
+CHECKOUT OPTIONS:
+  Agrume:
+    :commit: 62f11a3f42f85b073b8c055c7246a464628e60aa
+    :git: https://github.com/JanGorman/Agrume.git
+  SDWebImage:
+    :commit: 032ab1dd6d633ed30b8850eddc27f7073191f317
+    :git: https://github.com/rs/SDWebImage.git
+
+SPEC CHECKSUMS:
+  Agrume: b96babc1dc0a12cc799268e15cdc4571b0e6e1d3
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  Kingfisher: 007f5851c18c81e7cc106c9cbac1bafea1cce5dc
+  NYTPhotoViewer: 323217e4590a1586eb3c9674b3fefb0fb8b57896
+  SDWebImage: e379f33106cf8d6766f970c0ef1c3fb609c94d78
+
+PODFILE CHECKSUM: 393c38a86537931002a71c2f5f1337e964b6dc6e
+
+COCOAPODS: 1.1.0.rc.2
