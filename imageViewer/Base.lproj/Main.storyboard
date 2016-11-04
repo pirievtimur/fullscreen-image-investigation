@@ -23,9 +23,9 @@
                                     <constraint firstAttribute="height" constant="200" id="dG0-wP-AFP"/>
                                     <constraint firstAttribute="width" constant="200" id="wz3-LP-5Tp"/>
                                 </constraints>
-                                <state key="normal" title="NYPhoto"/>
+                                <state key="normal" title="PhotoBrowser"/>
                                 <connections>
-                                    <action selector="openPictures:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QAk-tk-jXn"/>
+                                    <action selector="photoBrowser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="77D-j6-MKD"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oG0-8a-Gr0">
@@ -38,11 +38,23 @@
                                     <action selector="openImageAgrum:" destination="BYZ-38-t0r" eventType="touchUpInside" id="c36-af-ghi"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Es-Oi-fAu">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="8UE-bf-mq9"/>
+                                    <constraint firstAttribute="width" constant="200" id="9CM-CI-IHt"/>
+                                </constraints>
+                                <state key="normal" title="Mail imageViewer"/>
+                                <connections>
+                                    <action selector="MailImageView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oyy-Bi-GL1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="oG0-8a-Gr0" firstAttribute="top" secondItem="OQH-qJ-6I8" secondAttribute="bottom" id="0Jf-o0-zac"/>
                             <constraint firstItem="OQH-qJ-6I8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="KRt-AP-F4w"/>
+                            <constraint firstItem="4Es-Oi-fAu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="W8q-9c-Qci"/>
+                            <constraint firstItem="4Es-Oi-fAu" firstAttribute="top" secondItem="oG0-8a-Gr0" secondAttribute="bottom" id="hpN-ZI-kFB"/>
                             <constraint firstItem="OQH-qJ-6I8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kBb-nD-csL"/>
                             <constraint firstItem="oG0-8a-Gr0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rDU-Jv-Ja8"/>
                         </constraints>
@@ -50,6 +62,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-407" y="36"/>
         </scene>
     </scenes>
 </document>
