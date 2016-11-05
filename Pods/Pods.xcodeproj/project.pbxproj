@@ -82,6 +82,8 @@
 		6919073ED7D9059F0F4281740F98B775 /* ImageViewer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AE02F9E91525F4665DD8059B6DAA15FD /* ImageViewer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		696B1871BF1749B037008125A6BC1A9D /* UISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDAB6890E243A5186BABB56985F94F3 /* UISlider.swift */; };
 		6B7547D53FC00E8FB5FE61370E181509 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAAA512A0A2FAEF5DFF8A0A7A845BB1 /* CGRect.swift */; };
+		711BE42A1DCD467B00EDD4C1 /* back_arrow_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 711BE4281DCD467B00EDD4C1 /* back_arrow_white@2x.png */; };
+		711BE42B1DCD467B00EDD4C1 /* back_arrow_white@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 711BE4291DCD467B00EDD4C1 /* back_arrow_white@3x.png */; };
 		7296E76C4B9149B828A9B549FE3B952E /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7485CC521E952744CFA3E9BDDCAE4F7F /* UIViewController.swift */; };
 		768485BCD9E451FC601C3B0057F1AB70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0113D46F12811B44ACAC949E141EE13 /* Foundation.framework */; };
 		770E403EE1285932CE85E0981111BB80 /* MWZoomingScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = DEE47B298AA6B750D6657AFA62635CA7 /* MWZoomingScrollView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -325,6 +327,8 @@
 		69FC0A6D1C9B82BC928DA8C2EEF8B782 /* Pods-imageViewer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-imageViewer.modulemap"; sourceTree = "<group>"; };
 		6C34937ECE1A41FB4CDF1AEB1D74A2CA /* UIBarButtonItemGrid@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "UIBarButtonItemGrid@3x.png"; path = "Pod/Assets/UIBarButtonItemGrid@3x.png"; sourceTree = "<group>"; };
 		6D1403BF67C52278AF62F08788C111B7 /* ImageDownloader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageDownloader.swift; path = Agrume/ImageDownloader.swift; sourceTree = "<group>"; };
+		711BE4281DCD467B00EDD4C1 /* back_arrow_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back_arrow_white@2x.png"; path = "Pod/Assets/back_arrow_white@2x.png"; sourceTree = "<group>"; };
+		711BE4291DCD467B00EDD4C1 /* back_arrow_white@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back_arrow_white@3x.png"; path = "Pod/Assets/back_arrow_white@3x.png"; sourceTree = "<group>"; };
 		712428B2AAB0D962D113DACA49E95562 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72180A1B981BFAF7C5BB4344C9EC66E5 /* SDWebImageDownloaderOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDownloaderOperation.h; path = SDWebImage/SDWebImageDownloaderOperation.h; sourceTree = "<group>"; };
 		72E4F80748EFEC84535BBC4AC5874E9F /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+WebCacheOperation.h"; path = "SDWebImage/UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
@@ -725,6 +729,8 @@
 		860BA35A4CB370ACB71B2069F8528720 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				711BE4281DCD467B00EDD4C1 /* back_arrow_white@2x.png */,
+				711BE4291DCD467B00EDD4C1 /* back_arrow_white@3x.png */,
 				C56598C1E4C854A6868D5B94063EE81D /* ImageError.png */,
 				1575FDE53AC8FA153A39F7C26212F7B8 /* ImageError@2x.png */,
 				F013114639B36A0E34F59FC053BEF2ED /* ImageError@3x.png */,
@@ -1161,7 +1167,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				711BE42B1DCD467B00EDD4C1 /* back_arrow_white@3x.png in Resources */,
 				F14A5B8716DFDA0C92F53478312B1C86 /* MWPhotoBrowser.bundle in Resources */,
+				711BE42A1DCD467B00EDD4C1 /* back_arrow_white@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

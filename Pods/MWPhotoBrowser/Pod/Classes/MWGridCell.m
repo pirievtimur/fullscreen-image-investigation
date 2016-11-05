@@ -100,6 +100,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     _imageView.frame = self.bounds;
+    //FLAG!
     _loadingIndicator.frame = CGRectMake(floorf((self.bounds.size.width - _loadingIndicator.frame.size.width) / 2.),
                                          floorf((self.bounds.size.height - _loadingIndicator.frame.size.height) / 2),
                                          _loadingIndicator.frame.size.width,

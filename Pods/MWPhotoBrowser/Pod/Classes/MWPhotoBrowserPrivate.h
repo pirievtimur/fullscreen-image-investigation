@@ -23,6 +23,10 @@
 	
 	// Views
 	UIScrollView *_pagingScrollView;
+    UIView *_likesContainer;
+    UILabel *_likesLabel;
+    UIButton *_likesButton;
+    
 	
 	// Paging & layout
 	NSMutableSet *_visiblePages, *_recycledPages;

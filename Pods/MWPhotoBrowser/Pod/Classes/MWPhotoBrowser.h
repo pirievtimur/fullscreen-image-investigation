@@ -38,6 +38,20 @@
 
 @end
 
+//@protocol MWProfilePhotosActions <NSObject>
+//
+//
+//- (NSUInteger)likesCount;
+//- (BOOL)isLiked;
+//- (BOOL)isFavorite;
+//- (BOOL)favorite:(BOOL)favorite;
+//- (BOOL)isBlocked;
+//- (void)block:(BOOL)block;
+//- (void)reportSpam;
+//- (void)reportAbuse;
+//
+//@end
+
 @interface MWPhotoBrowser : UIViewController <UIScrollViewDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, weak) IBOutlet id<MWPhotoBrowserDelegate> delegate;
