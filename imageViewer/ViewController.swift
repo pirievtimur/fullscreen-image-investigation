@@ -49,7 +49,7 @@ class ViewController: UIViewController, MWPhotoBrowserDelegate {
 
     //PHOTO BROWSER
     @IBAction func photoBrowser(_ sender: AnyObject) {
-        let browser = MWPhotoBrowser(delegate: self)
+        let browser = MWPhotoBrowser(delegate: self)
         
         // Set options
         browser?.displayActionButton = true // Show action button to allow sharing, copying, etc (defaults to YES) ++
